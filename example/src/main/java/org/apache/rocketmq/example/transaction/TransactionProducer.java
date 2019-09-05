@@ -42,7 +42,7 @@ public class TransactionProducer {
                 return thread;
             }
         });
-
+        producer.setNamesrvAddr("localhost:9876");
         producer.setExecutorService(executorService);
         producer.setTransactionListener(transactionListener);
         producer.start();
@@ -51,7 +51,7 @@ public class TransactionProducer {
         for (int i = 0; i < 10; i++) {
             try {
                 Message msg =
-                    new Message("TopicTest1234", tags[i % tags.length], "KEY" + i,
+                    new Message("BatchTest", tags[i % tags.length], "KEY" + i,
                         ("Hello RocketMQ " + i).getBytes(RemotingHelper.DEFAULT_CHARSET));
                 SendResult sendResult = producer.sendMessageInTransaction(msg, null);
                 System.out.printf("%s%n", sendResult);

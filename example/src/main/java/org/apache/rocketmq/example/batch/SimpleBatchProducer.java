@@ -27,6 +27,7 @@ public class SimpleBatchProducer {
     public static void main(String[] args) throws Exception {
         DefaultMQProducer producer = new DefaultMQProducer("BatchProducerGroupName");
         producer.start();
+        producer.setNamesrvAddr("localhost:9876");
 
         //If you just send messages of no more than 1MiB at a time, it is easy to use batch
         //Messages of the same batch should have: same topic, same waitStoreMsgOK and no schedule support

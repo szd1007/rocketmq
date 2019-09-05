@@ -34,6 +34,7 @@ public class TransactionListenerImpl implements TransactionListener {
         int value = transactionIndex.getAndIncrement();
         int status = value % 3;
         localTrans.put(msg.getTransactionId(), status);
+        System.err.println("execute call back msgID:" + msg.getTransactionId());
         return LocalTransactionState.UNKNOW;
     }
 
@@ -43,12 +44,16 @@ public class TransactionListenerImpl implements TransactionListener {
         if (null != status) {
             switch (status) {
                 case 0:
+                    System.out.println("unknown check"+msg.getMsgId());
                     return LocalTransactionState.UNKNOW;
                 case 1:
+                    System.out.println("commit msg " + msg.getMsgId());
                     return LocalTransactionState.COMMIT_MESSAGE;
                 case 2:
+                    System.out.println("rollback msg " + msg.getMsgId());
                     return LocalTransactionState.ROLLBACK_MESSAGE;
                 default:
+                    System.out.println("commit msg2  " + msg.getMsgId());
                     return LocalTransactionState.COMMIT_MESSAGE;
             }
         }

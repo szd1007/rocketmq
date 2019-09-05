@@ -16,6 +16,7 @@
  */
 package org.apache.rocketmq.example.quickstart;
 
+ import java.util.Date;
 import java.util.List;
 import org.apache.rocketmq.client.consumer.DefaultMQPushConsumer;
 import org.apache.rocketmq.client.consumer.listener.ConsumeConcurrentlyContext;
@@ -30,6 +31,7 @@ import org.apache.rocketmq.common.message.MessageExt;
  */
 public class Consumer {
 
+    private static final String TOPIC = "BatchTest";
     public static void main(String[] args) throws InterruptedException, MQClientException {
 
         /*
@@ -48,7 +50,7 @@ public class Consumer {
          * }
          * </pre>
          */
-
+        consumer.setNamesrvAddr("localhost:9876");
         /*
          * Specify where to start in case the specified consumer group is a brand new one.
          */
@@ -57,7 +59,7 @@ public class Consumer {
         /*
          * Subscribe one more more topics to consume.
          */
-        consumer.subscribe("TopicTest", "*");
+        consumer.subscribe(TOPIC, "*");
 
         /*
          *  Register callback to execute on arrival of messages fetched from brokers.
@@ -67,7 +69,9 @@ public class Consumer {
             @Override
             public ConsumeConcurrentlyStatus consumeMessage(List<MessageExt> msgs,
                 ConsumeConcurrentlyContext context) {
-                System.out.printf("%s Receive New Messages: %s %n", Thread.currentThread().getName(), msgs);
+                for (MessageExt msg : msgs) {
+                    System.out.printf(new Date().toString() + "%s Receive New Messages: %s %n", Thread.currentThread().getName(), new String(msg.getBody()));
+                }
                 return ConsumeConcurrentlyStatus.CONSUME_SUCCESS;
             }
         });

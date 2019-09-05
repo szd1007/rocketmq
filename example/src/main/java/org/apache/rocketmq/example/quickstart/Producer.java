@@ -22,6 +22,8 @@ import org.apache.rocketmq.client.producer.SendResult;
 import org.apache.rocketmq.common.message.Message;
 import org.apache.rocketmq.remoting.common.RemotingHelper;
 
+ import java.util.Date;
+
 /**
  * This class demonstrates how to send messages to brokers using provided {@link DefaultMQProducer}.
  */
@@ -44,29 +46,41 @@ public class Producer {
          * }
          * </pre>
          */
-
+        producer.setNamesrvAddr("localhost:9876");
         /*
          * Launch the instance.
          */
         producer.start();
 
-        for (int i = 0; i < 1000; i++) {
+        for (int i = 0; i < 1; i++) {
             try {
 
                 /*
                  * Create a message instance, specifying topic, tag and message body.
                  */
-                Message msg = new Message("TopicTest" /* Topic */,
+//                Message msg = new Message("TopicTest" /* Topic */,
+//                    "TagA" /* Tag */,
+//                    ("Hello RocketMQ " + i).getBytes(RemotingHelper.DEFAULT_CHARSET) /* Message body */
+//                );
+                Message msg = new Message("BatchTest" /* Topic */,
                     "TagA" /* Tag */,
                     ("Hello RocketMQ " + i).getBytes(RemotingHelper.DEFAULT_CHARSET) /* Message body */
                 );
 
                 /*
+                 * 延时mq
+                 */
+                msg.setDelayTimeLevel(3);
+                /*
+                 * one way send
+                 */
+//                producer.sendOneway(msg);
+                /*
                  * Call send message to deliver message to one of brokers.
                  */
                 SendResult sendResult = producer.send(msg);
 
-                System.out.printf("%s%n", sendResult);
+                System.out.printf(new Date().toString() + " %s%n", sendResult);
             } catch (Exception e) {
                 e.printStackTrace();
                 Thread.sleep(1000);
