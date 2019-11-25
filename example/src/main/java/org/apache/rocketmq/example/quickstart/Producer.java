@@ -33,7 +33,7 @@ public class Producer {
         /*
          * Instantiate with a producer group name.
          */
-        DefaultMQProducer producer = new DefaultMQProducer("please_rename_unique_group_name");
+        DefaultMQProducer producer = new DefaultMQProducer("please_rename_unique_group_name_4");
 
         /*
          * Specify name server addresses.
@@ -52,7 +52,7 @@ public class Producer {
          */
         producer.start();
 
-        for (int i = 0; i < 1; i++) {
+        for (int i = 0; i < 10; i++) {
             try {
 
                 /*
