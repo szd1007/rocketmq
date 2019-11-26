@@ -487,7 +487,7 @@ public class MQClientInstance {
             }
         }
     }
-
+    //更新topic的路由信息
     public boolean updateTopicRouteInfoFromNameServer(final String topic) {
         return updateTopicRouteInfoFromNameServer(topic, false, null);
     }
