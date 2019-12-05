@@ -19,7 +19,7 @@ package org.apache.rocketmq.remoting.netty;
 import io.netty.channel.ChannelHandlerContext;
 import org.apache.rocketmq.remoting.protocol.RemotingCommand;
 
-/**
+/** 远程数据解析处理器,每个server处理的code列表都会有一个对应的processor
  * Common remoting command processor
  */
 public interface NettyRequestProcessor {

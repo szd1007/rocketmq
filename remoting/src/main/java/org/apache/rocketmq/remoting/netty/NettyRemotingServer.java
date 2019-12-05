@@ -395,7 +395,7 @@ public class NettyRemotingServer extends NettyRemotingAbstract implements Remoti
             ctx.fireChannelRead(msg.retain());
         }
     }
-
+    //remoting接收数据处理逻辑
     class NettyServerHandler extends SimpleChannelInboundHandler<RemotingCommand> {
 
         @Override
